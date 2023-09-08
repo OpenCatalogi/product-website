@@ -24,7 +24,7 @@ env: # Change these to your preferences any image url can also be a base encoded
   JUMBOTRON_TITLE: "Open Catalogi"
   JUMBOTRON_SUBTITLE: "Open Catalogi"
   JUMBOTRON_DESCRIPTION: ${{ github.event.repository.description }}
-  JUMBOTRON_SVG: "https://www.rotterdam.nl/_next/image?url=https%3A%2F%2Fbackend-dvg.rotterdam.nl%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fhero_large%2Fpublic%2F2022-12%2F22500-Arnoud-Verhey_0.jpg%3Fh%3D940640a5%26itok%3Dl9pnN9Gq&w=3840&q=75"
+  JUMBOTRON_SVG: "https://backend-dvg.rotterdam.nl/sites/default/files/2022-12/22500-Arnoud-Verhey_0.jpg"
 
   # Other
   FAVICON_URL: "https://www.rotterdam.nl/favicon.ico?v=2"
