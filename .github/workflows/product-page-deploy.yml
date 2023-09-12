@@ -7,7 +7,7 @@ env: # Change these to your preferences any image url can also be a base encoded
   GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
   GITHUB_REPOSITORY_URL: ${{ github.event.repository.url }}
   GITHUB_API_BASE_URL: https://api.github.com/repos/OpenCatalogi/.github/contents/
-  GITHUB_DOCS_DIRECTORY_PATHS: '[{"name": "Handleidingen", "location  ": "/docs/handleidingen"},{"name": "Roadmap", "location": "/docs/roadmap"}]'
+  GITHUB_DOCS_DIRECTORY_PATHS: '[{"name": "Handleidingen", "location ": "/docs/handleidingen"},{"name": "Roadmap", "location": "/docs/roadmap"}]'
 
   # Links
   SLACK_URL: "https://join.slack.com/t/samenorganiseren/shared_invite/zt-22wtrcb1y-RMdSp6C1LMhUaCZQlL9trQ"
