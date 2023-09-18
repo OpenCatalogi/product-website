@@ -23,7 +23,7 @@ jobs:
       - name: Check and Update publiccode.yaml
         run: |
           REPO_NAME="${{ github.repository }}"
-          REPO_DESC="${{ github.event.repository.description }}"
+          REPO_DESC="${{ github.event.repository }}"
           
           echo "${{ github.repository }}"
           echo "${{ github.event.repository.description }}"
