@@ -45,35 +45,27 @@ jobs:
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
             touch publiccode.yaml
-          fi        
-        
-          if [ "$REPO_NAME" != "null" ]; then
-            echo "name: $REPO_NAME" > publiccode.yaml
-          fi
-  
-          if [ "$REPO_DESC" != "null" ]; then
-            echo "description: $REPO_DESC" >> publiccode.yaml
-          fi          
-                    
-          if [ "$REPO_URL" != "null" ]; then
-            echo "url: $REPO_URL" > publiccode.yaml
-          fi
-  
-          if [ "$REPO_TOPICS" != "null" ]; then
-            echo "topics: $REPO_TOPICS" >> publiccode.yaml
-          fi
+          fi           
+
+          update_or_append() {
+            KEY=$1
+            VALUE=$2
+            FILE=$3
+            if grep -q "^$KEY:" "$FILE"; then
+              sed -i "s/^$KEY:.*/$KEY: $VALUE/" "$FILE"
+            elif [ "$VALUE" != "null" ]; then
+              echo "$KEY: $VALUE" >> "$FILE"
+            fi
+          }  
           
-          if [ "$REPO_AVATAR" != "null" ]; then
-            echo "avatar: $REPO_AVATAR" >> publiccode.yaml
-          fi        
-        
-          if [ "$REPO_EMAIL" != "null" ]; then
-            echo "email: $REPO_EMAIL" >> publiccode.yaml
-          fi
-  
-          if [ "$REPO_LICENSE" != "null" ]; then
-            echo "license: $REPO_LICENSE" >> publiccode.yaml
-          fi
+          update_or_append "name" "$REPO_NAME" "publiccode.yaml"
+          update_or_append "description" "$REPO_DESC" "publiccode.yaml"
+          update_or_append "url" "$REPO_URL" "publiccode.yaml"
+          update_or_append "homepage" "$REPO_HOMEPAGE" "publiccode.yaml"
+          update_or_append "topics" "$REPO_TOPICS" "publiccode.yaml"
+          update_or_append "license" "$REPO_LICENSE" "publiccode.yaml"
+          update_or_append "organisationName" "$ORGANISATION_NAME" "publiccode.yaml"
+          update_or_append "organisationAvatar" "$ORGANISATION_AVATAR" "publiccode.yaml"
 
       - name: Commit changes
         run: |

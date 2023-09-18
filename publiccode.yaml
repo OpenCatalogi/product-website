@@ -5,4 +5,5 @@ REPO_EMAIL=
 REPO_LICENSE=
 avatar: 
 email: 
-license: 
+license:
+test: "test"
