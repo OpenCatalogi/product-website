@@ -59,7 +59,7 @@ jobs:
           
           # Convert created_at to date format
           # created_at_date = datetime.fromisoformat("$REPO_CREATED_AT".replace("Z", "+00:00")).strftime('%Y-%m-%d')
-          created_at_date = "$REPO_CREATED_AT"
+          created_at_date = datetime.now().strftime('%Y-%m-%d')
 
           # Convert topics JSON string to Python list and then to comma-separated string
 
