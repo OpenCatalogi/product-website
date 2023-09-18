@@ -3,6 +3,9 @@ name: Deploy the Product Page to GitHub Pages
 env: # Change these to your preferences any image url can also be a base encoded image
   GITHUB_PAGES_BRANCH: gh-pages
 
+  # options: "true" | "false"
+  USE_GITHUB_REPOSITORY_NAME_AS_PATH_PREFIX: "false"
+
   # Connected Repository
   GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
   GITHUB_REPOSITORY_URL: ${{ github.event.repository.url }}
@@ -12,14 +15,14 @@ env: # Change these to your preferences any image url can also be a base encoded
   # Links
   SLACK_URL: "https://join.slack.com/t/samenorganiseren/shared_invite/zt-22wtrcb1y-RMdSp6C1LMhUaCZQlL9trQ"
   READ_THE_DOCS_URL: "https://commongateway.readthedocs.io/en/latest/"
-  
+
   # Navbar
   NAVBAR_LOGO_URL: "https://www.rotterdam.nl/images/logo-base.svg"
 
   # Footer
   FOOTER_LOGO_URL: "https://www.rotterdam.nl/images/logo-base-white.svg"
   FOOTER_LOGO_HREF: "https://rotterdam.nl/"
-  
+
   # Jumbotron
   JUMBOTRON_TITLE: "Open Catalogi"
   JUMBOTRON_SUBTITLE: "Open Catalogi is een oplossing voor het gezamenlijk weergeven van meerdere bronnen in één uniform overzicht"
@@ -53,6 +56,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_GITHUB_REPOSITORY_NAME: ${{ env.GITHUB_REPOSITORY_NAME }}
+          envkey_USE_GITHUB_REPOSITORY_NAME_AS_PATH_PREFIX: ${{ env.USE_GITHUB_REPOSITORY_NAME_AS_PATH_PREFIX }}
           envkey_GATSBY_GITHUB_API_BASE_URL: ${{ env.GITHUB_API_BASE_URL }}
           envkey_GATSBY_FAVICON_URL: ${{ env.FAVICON_URL }}
           envkey_GATSBY_NAVBAR_LOGO_URL: ${{ env.NAVBAR_LOGO_URL }}
