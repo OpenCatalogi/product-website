@@ -24,26 +24,26 @@ jobs:
         run: |
           ORG_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/orgs/${{ github.repository_owner }})
-          echo "ORG_DETAILS=$ORG_DETAILS" >> $GITHUB_ENV
+
+      - name: Print GitHub Object
+        run: |
+          echo "GitHub Object:"
+          echo $REPO_DETAILS | jq
 
       - name: Check and Update publicorganisation.yaml
-        run: |
-          ORG_NAME="${{ github.repository_owner }}"
-          ORG_DESC="${{ github.event.organization.description }}"
-          ORG_LOGO=$(echo $ORG_DETAILS | jq -r '.avatar_url')
-          ORG_URL=$(echo $ORG_DETAILS | jq -r '.html_url')
-          ORG_EMAIL=$(echo $ORG_DETAILS | jq -r '.email')
+        run: |          
+          ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
+          ORGANISATION_AVATAR=$(echo $REPO_DETAILS | jq -r '.owner.avatar_url')  
+          ORGANISATION_EMAIL=$(echo $REPO_DETAILS | jq -r '.owner.email') 
           
-          if [ ! -f "publicorganisation.yaml" ]; then
-            echo "publicorganisation.yaml does not exist, creating one."
-            touch publicorganisation.yaml
+          if [ ! -f "publiccode.yaml" ]; then
+            echo "publiccode.yaml does not exist, creating one."
+            touch publiccode.yaml
+          fi        
+          
+          if [ "$ORGANISATION_NAME" != "null" ]; then
+            echo "name: $ORGANISATION_NAME" > publiccode.yaml
           fi
-          
-          echo "name: $ORG_NAME" > publicorganisation.yaml
-          echo "description: $ORG_DESC" >> publicorganisation.yaml
-          echo "logo: $ORG_LOGO" >> publicorganisation.yaml
-          echo "url: $ORG_URL" >> publicorganisation.yaml
-          echo "email: $ORG_EMAIL" >> publicorganisation.yaml
 
       - name: Commit changes
         run: |
