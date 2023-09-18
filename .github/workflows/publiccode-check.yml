@@ -1,0 +1,42 @@
+name: PublicCode Check and Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Repository Name
+        run: |
+          if [[ "${{ github.repository }}" == *".github"* ]]; then
+            echo "This workflow cannot be run within .github repositories."
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check and Update publiccode.yaml
+        run: |
+          REPO_NAME="${{ github.repository }}"
+          REPO_DESC="${{ github.event.repository.description }}"
+          
+          if [ ! -f "publiccode.yaml" ]; then
+            echo "publiccode.yaml does not exist, creating one."
+            touch publiccode.yaml
+          fi
+          
+          echo "name: $REPO_NAME" > publiccode.yaml
+          echo "description: $REPO_DESC" >> publiccode.yaml
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add publiccode.yaml
+          git commit -m "Update publiccode.yaml with repo name and description" || echo "No changes to commit"
+          git push
