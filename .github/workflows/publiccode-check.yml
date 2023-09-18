@@ -41,10 +41,11 @@ jobs:
           REPO_TOPICS="${{ github.event.repository.topics }}"
           REPO_LICENSE="${{ github.event.repository.license.key }}"
 
-          ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
-          ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"
-          ORGANISATION_URL="${{ github.event.repository.owner.html_url }}"
-          ORGANISATION_EMAIL="${{ github.event.repository.owner.email }}"
+          ORGANISATION_NAME="${{ github.event.organization.login }}"     
+          ORGANISATION_DESCRIPTION="${{ github.event.organization.description }}"     
+          ORGANISATION_GITID="${{ github.event.organization.id}}"     
+          ORGANISATION_URL="${{ github.event.organization.login }}"     
+          ORGANISATION_AVATAR="${{ github.event.organization.avatar_url }}"     
           
           
           echo "Lets look at the info..."
@@ -63,14 +64,17 @@ jobs:
                   data = yaml.safe_load(f)
           except FileNotFoundError:
               data = {}
-
+          
+          # Static values
+          data['publiccodeYmlVersion'] = "0.1"
+          
           # Update or append values
           if "$REPO_NAME" != "null":
               data['name'] = "$REPO_NAME"
-          if "$REPO_DESC" != "null":
-              data['description'] = "$REPO_DESC"
           if "$REPO_URL" != "null":
               data['url'] = "$REPO_URL"
+          if "$REPO_DESC" != "null":
+              data['description'] = "$REPO_DESC"
           if "$REPO_HOMEPAGE" != "null":
               data['homepage'] = "$REPO_HOMEPAGE"
           if "$REPO_TOPICS" != "null":
@@ -87,8 +91,8 @@ jobs:
               data['organisation']['avatar'] = "$ORGANISATION_AVATAR"
           if "$ORGANISATION_URL" != "null":
               data['organisation']['url'] = "$ORGANISATION_URL"
-          if "$ORGANISATION_EMAIL" != "null":
-              data['organisation']['email'] = "$ORGANISATION_EMAIL"
+          if "$ORGANISATION_DESCRIPTION" != "null":
+              data['organisation']['description'] = "$ORGANISATION_DESCRIPTION"
 
           # Write updated publiccode.yaml
           with open("publiccode.yaml", "w") as f:
