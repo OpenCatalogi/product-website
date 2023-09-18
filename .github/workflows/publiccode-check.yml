@@ -36,8 +36,9 @@ jobs:
           REPO_DESC="${{ github.event.repository.description }}"
           REPO_URL="${{ github.event.repository.html_url }}"
           REPO_HOMEPAGE="${{ github.event.repository.homepage }}"
-          REPO_TOPICS="${{ github.event.repository.topics }}"
+          REPO_TOPICS="${{ toJson(github.event.repository.topics) }}"
           REPO_LICENSE="${{ github.event.repository.license.key }}"
+          REPO_CREATED_AT="${{ github.event.repository.created_at }}"
 
           ORGANISATION_NAME="${{ github.event.organization.login }}"     
           ORGANISATION_DESCRIPTION="${{ github.event.organization.description }}"     
@@ -51,6 +52,8 @@ jobs:
           echo "Updating publiccode.yaml..."
           python - <<END
           import yaml
+          import json
+          from datetime import datetime
 
           # Read existing publiccode.yaml
           try:
@@ -59,9 +62,13 @@ jobs:
           except FileNotFoundError:
               data = {}
           
-          # Static values
-          data['publiccodeYmlVersion'] = "0.1"
-          
+          # Convert created_at to date format
+          created_at_date = datetime.fromisoformat("$REPO_CREATED_AT".replace("Z", "+00:00")).strftime('%Y-%m-%d')
+
+          # Convert topics JSON string to Python list and then to comma-separated string
+          topics_list = json.loads("$REPO_TOPICS")
+          topics_str = ', '.join(topics_list)
+
           # Update or append values
           if "$REPO_NAME" != "null":
               data['name'] = "$REPO_NAME"
@@ -71,10 +78,14 @@ jobs:
               data['description'] = "$REPO_DESC"
           if "$REPO_HOMEPAGE" != "null":
               data['homepage'] = "$REPO_HOMEPAGE"
-          if "$REPO_TOPICS" != "null":
-              data['topics'] = "$REPO_TOPICS"
+          if topics_str:
+              data['topics'] = topics_str
           if "$REPO_LICENSE" != "null":
               data['license'] = "$REPO_LICENSE"
+
+          # Add releaseDate if not present
+          if 'releaseDate' not in data:
+              data['releaseDate'] = created_at_date
 
           # Create or update nested 'organisation' array
           if 'organisation' not in data:
@@ -92,7 +103,7 @@ jobs:
           with open("publiccode.yaml", "w") as f:
               yaml.safe_dump(data, f)
           END
-      
+
 
       - name: Commit changes
         run: |
