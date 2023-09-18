@@ -37,14 +37,6 @@ jobs:
           REPO_URL="${{ github.event.repository.html_url }}"
           REPO_HOMEPAGE="${{ github.event.repository.homepage  }}"
           REPO_TOPICS=${{ github.event.repository.topics }}"
-          REPO_LICENSE=$(echo $REPO_DETAILS | jq -r '.license.name')
-          
-          REPO_AVATAR=$(echo $REPO_DETAILS | jq -r '.owner.avatar_url')
-          REPO_EMAIL=$(echo $REPO_DETAILS | jq -r '.owner.email')
-          
-          ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
-          ORGANISATION_AVATAR=$(echo $REPO_DETAILS | jq -r '.owner.avatar_url')  
-          ORGANISATION_EMAIL=$(echo $REPO_DETAILS | jq -r '.owner.email') 
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
@@ -65,14 +57,6 @@ jobs:
   
           if [ "$REPO_TOPICS" != "null" ]; then
             echo "topics: $REPO_TOPICS" >> publiccode.yaml
-          fi
-          
-          if [ "$REPO_AVATAR" != "null" ]; then
-            echo "avatar: $REPO_AVATAR" >> publiccode.yaml
-          fi        
-        
-          if [ "$REPO_EMAIL" != "null" ]; then
-            echo "email: $REPO_EMAIL" >> publiccode.yaml
           fi
 
       - name: Commit changes
