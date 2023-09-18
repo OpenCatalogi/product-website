@@ -25,6 +25,9 @@ jobs:
           REPO_NAME="${{ github.repository }}"
           REPO_DESC="${{ github.event.repository.description }}"
           
+          echo "${{ github.repository }}"
+          echo "${{ github.event.repository.description }}"
+          
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
             touch publiccode.yaml
