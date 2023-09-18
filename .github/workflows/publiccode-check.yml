@@ -74,10 +74,6 @@ jobs:
           if [ "$REPO_EMAIL" != "null" ]; then
             echo "email: $REPO_EMAIL" >> publiccode.yaml
           fi
-  
-          if [ "$REPO_LICENSE" != "null" ]; then
-            echo "license: $REPO_LICENSE" >> publiccode.yaml
-          fi
 
       - name: Commit changes
         run: |
