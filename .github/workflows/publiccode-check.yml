@@ -55,12 +55,7 @@ jobs:
   
           if [ "$REPO_DESC" != "null" ]; then
             echo "description: $REPO_DESC" >> publiccode.yaml
-          fi          
-          
-          
-          if [ "$REPO_HOMEPAGE" != "null" ]; then
-             REPO_URL = $REPO_HOMEPAGE
-          fi
+          fi       
           
           if [ "$REPO_URL" != "null" ]; then
             echo "url: $REPO_URL" > publiccode.yaml
