@@ -24,11 +24,15 @@ jobs:
         run: |
           REPO_NAME="${{ github.event.repository.name }}"
           REPO_DESC="${{ github.event.repository.description }}"
-          REPO_URL "${{ github.event.repository.html_url }}"
-          REPO_HOMEPAGE "${{ github.event.repository.homepage  }}"
-          REPO_TOPICS "${{ github.event.repository.topics  }}"
+          REPO_URL="${{ github.event.repository.html_url }}"
+          REPO_HOMEPAGE="${{ github.event.repository.homepage  }}"
+          REPO_TOPICS=${{ github.event.repository.topics  }}"
+          REPO_AVATAR=""
+          REPO_EMAIL=""
+          REPO_LICENSE=${{ github.event.repository.license.key  }}"
           
-          ORGANISATION_NAME "${{ github.event.repository.owner.login }}"    
+          ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
+          ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"  
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
