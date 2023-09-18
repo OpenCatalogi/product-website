@@ -4,6 +4,11 @@ email: null
 homepage: ''
 license: ''
 name: product-website
+organisation:
+  avatar: https://avatars.githubusercontent.com/u/106239067?v=4
+  email: ''
+  name: OpenCatalogi
+  url: https://github.com/OpenCatalogi
 organisationAvatar: https://avatars.githubusercontent.com/u/106239067?v=4
 organisationName: OpenCatalogi
 topics: Array
