@@ -22,23 +22,52 @@ jobs:
 
       - name: Check and Update publiccode.yaml
         run: |
-          REPO_NAME="${{ github.repository }}"
+          REPO_NAME="${{ github.event.repository.name }}"
           REPO_DESC="${{ github.event.repository.description }}"
+          REPO_URL "${{ github.event.repository.html_url }}"
+          REPO_HOMEPAGE "${{ github.event.repository.homepage  }}"
+          REPO_TOPIC "${{ github.event.repository.topics  }}"
           
-          echo "${{ github.event.repository.name  }}"
-          echo "${{ github.event.repository.description }}"
-          echo "${{ github.event.repository.html_url }}"
-          echo "${{ github.event.repository.homepage  }}"
-          echo "${{ github.event.repository.topics  }}"
-          echo "${{ github.event.repository.owner.login  }}"
+          ORGANISATION_NAME "${{ github.event.repository.owner.login }}"    
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
             touch publiccode.yaml
           fi
+        
+        
+          if [ "$REPO_NAME" != "null" ]; then
+            echo "name: $REPO_NAME" > publiccode.yaml
+          fi
+  
+          if [ "$REPO_DESC" != "null" ]; then
+            echo "description: $REPO_DESC" >> publiccode.yaml
+          fi
           
-          echo "name: $REPO_NAME" > publiccode.yaml
-          echo "description: $REPO_DESC" >> publiccode.yaml
+          
+          if [ "REPO_URL" != "null" ]; then
+            echo "url: REPO_URL" > publiccode.yaml
+          fi
+  
+          if [ "REPO_HOMEPAGE" != "null" ]; then
+            echo "url: REPO_HOMEPAGE" >> publiccode.yaml
+          fi
+  
+          if [ "REPO_TOPIC" != "null" ]; then
+            echo "topics: REPO_TOPIC" >> publiccode.yaml
+          fi
+          
+          if [ "$REPO_AVATAR" != "null" ]; then
+            echo "avatar: $REPO_AVATAR" >> publiccode.yaml
+          fi        
+        
+          if [ "$REPO_EMAIL" != "null" ]; then
+            echo "email: $REPO_EMAIL" >> publiccode.yaml
+          fi
+  
+          if [ "$REPO_LICENSE" != "null" ]; then
+            echo "license: $REPO_LICENSE" >> publiccode.yaml
+          fi
 
       - name: Commit changes
         run: |
