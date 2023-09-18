@@ -6,8 +6,10 @@ license: ''
 name: product-website
 organisation:
   avatar: https://avatars.githubusercontent.com/u/106239067?v=4
+  description: ''
   email: ''
   name: OpenCatalogi
-  url: https://github.com/OpenCatalogi
+  url: OpenCatalogi
+publiccodeYmlVersion: '0.1'
 topics: Array
 url: https://github.com/OpenCatalogi/product-website
