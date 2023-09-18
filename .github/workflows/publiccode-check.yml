@@ -37,6 +37,12 @@ jobs:
           REPO_URL="${{ github.event.repository.html_url }}"
           REPO_HOMEPAGE="${{ github.event.repository.homepage  }}"
           REPO_TOPICS=${{ github.event.repository.topics }}"
+          REPO_AVATAR=""
+          REPO_EMAIL=""
+          REPO_LICENSE=${{ github.event.repository.license.key  }}"
+          
+          ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
+          ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"  
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
@@ -49,7 +55,12 @@ jobs:
   
           if [ "$REPO_DESC" != "null" ]; then
             echo "description: $REPO_DESC" >> publiccode.yaml
-          fi       
+          fi          
+          
+          
+          if [ "$REPO_HOMEPAGE" != "null" ]; then
+             $REPO_URL = $REPO_HOMEPAGE
+          fi
           
           if [ "$REPO_URL" != "null" ]; then
             echo "url: $REPO_URL" > publiccode.yaml
@@ -57,6 +68,18 @@ jobs:
   
           if [ "$REPO_TOPICS" != "null" ]; then
             echo "topics: $REPO_TOPICS" >> publiccode.yaml
+          fi
+          
+          if [ "$REPO_AVATAR" != "null" ]; then
+            echo "avatar: $REPO_AVATAR" >> publiccode.yaml
+          fi        
+        
+          if [ "$REPO_EMAIL" != "null" ]; then
+            echo "email: $REPO_EMAIL" >> publiccode.yaml
+          fi
+  
+          if [ "$REPO_LICENSE" != "null" ]; then
+            echo "license: $REPO_LICENSE" >> publiccode.yaml
           fi
 
       - name: Commit changes
