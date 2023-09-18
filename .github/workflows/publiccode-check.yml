@@ -75,9 +75,9 @@ jobs:
           if "$REPO_LICENSE" != "null":
               data['license'] = "$REPO_LICENSE"
           if "$ORGANISATION_NAME" != "null":
-              data['organisationName'] = "$ORGANISATION_NAME"
+              data['organisation'][name] = "$ORGANISATION_NAME"
           if "$ORGANISATION_AVATAR" != "null":
-              data['organisationAvatar'] = "$ORGANISATION_AVATAR"
+              data['organisation'][avatar] = "$ORGANISATION_AVATAR"
 
           # Write updated publiccode.yaml
           with open("publiccode.yaml", "w") as f:
