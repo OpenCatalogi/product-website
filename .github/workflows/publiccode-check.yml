@@ -28,12 +28,7 @@ jobs:
       - name: Fetch Repository Details
         run: |
           REPO_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }})        
-
-      - name: Print GitHub Object
-        run: |
-          echo "GitHub Object:"
-          echo $REPO_DETAILS | jq
+          https://api.github.com/repos/${{ github.repository }})    
 
       - name: Check and Update publiccode.yaml
         run: |
@@ -43,9 +38,11 @@ jobs:
           REPO_HOMEPAGE="${{ github.event.repository.homepage }}"
           REPO_TOPICS="${{ github.event.repository.topics }}"
           REPO_LICENSE="${{ github.event.repository.license.key }}"
-          
+
           ORGANISATION_NAME="${{ github.event.repository.owner.login }}"     
-          ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"      
+          ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"
+          ORGANISATION_URL="${{ github.event.repository.owner.html_url }}"
+          ORGANISATION_EMAIL="${{ github.event.repository.owner.email }}"
 
           echo "Installing PyYAML..."
           pip install PyYAML
@@ -74,15 +71,24 @@ jobs:
               data['topics'] = "$REPO_TOPICS"
           if "$REPO_LICENSE" != "null":
               data['license'] = "$REPO_LICENSE"
+
+          # Create or update nested 'organisation' array
+          if 'organisation' not in data:
+              data['organisation'] = {}
           if "$ORGANISATION_NAME" != "null":
-              data['organisation'][name] = "$ORGANISATION_NAME"
+              data['organisation']['name'] = "$ORGANISATION_NAME"
           if "$ORGANISATION_AVATAR" != "null":
-              data['organisation'][avatar] = "$ORGANISATION_AVATAR"
+              data['organisation']['avatar'] = "$ORGANISATION_AVATAR"
+          if "$ORGANISATION_URL" != "null":
+              data['organisation']['url'] = "$ORGANISATION_URL"
+          if "$ORGANISATION_EMAIL" != "null":
+              data['organisation']['email'] = "$ORGANISATION_EMAIL"
 
           # Write updated publiccode.yaml
           with open("publiccode.yaml", "w") as f:
               yaml.safe_dump(data, f)
           END
+      
 
       - name: Commit changes
         run: |
