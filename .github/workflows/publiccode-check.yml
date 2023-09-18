@@ -20,6 +20,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Fetch Repository Details
         run: |
           REPO_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -65,8 +70,6 @@ jobs:
               data['url'] = "$REPO_URL"
           if "$REPO_HOMEPAGE" != "null":
               data['homepage'] = "$REPO_HOMEPAGE"
-          if "$REPO_TOPICS" != "null":
-              data['topics'] = "$REPO_TOPICS"
           if "$REPO_LICENSE" != "null":
               data['license'] = "$REPO_LICENSE"
           if "$ORGANISATION_NAME" != "null":
