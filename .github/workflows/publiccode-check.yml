@@ -72,8 +72,8 @@ jobs:
               data['description'] = "$REPO_DESC"
           if "$REPO_HOMEPAGE" != "null" and "$REPO_HOMEPAGE":
               data['url'] = "$REPO_HOMEPAGE"
-          if "$REPO_TOPICS" != "null" and "$REPO_TOPICS":
-              data['topics'] = "$REPO_TOPICS"
+          #if "$REPO_TOPICS" != "null" and "$REPO_TOPICS":
+          #    data['topics'] = "$REPO_TOPICS"
           if "$REPO_LICENSE" != "null" and "$REPO_LICENSE":
               data['license'] = "$REPO_LICENSE"
 
