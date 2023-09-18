@@ -106,3 +106,13 @@ jobs:
           git add publiccode.yaml
           git commit -m "${{ github.workflow }}" || echo "No changes to commit"
           git push
+          
+      - name: Post Repository URL to OpenCatalogi API
+        run: |
+          curl -X POST "https://api.opencatalogi.nl/api/github_events" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "repository": {
+              "html_url": "'${{ github.event.repository.html_url }}'"
+            }
+          }'
