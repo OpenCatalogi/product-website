@@ -62,8 +62,6 @@ jobs:
           created_at_date = "$REPO_CREATED_AT"
 
           # Convert topics JSON string to Python list and then to comma-separated string
-          topics_list = json.loads("$REPO_TOPICS")
-          topics_str = ', '.join(topics_list)
 
           # Update or append values
           if "$REPO_NAME" != "null" and "$REPO_NAME":
@@ -74,8 +72,8 @@ jobs:
               data['description'] = "$REPO_DESC"
           if "$REPO_HOMEPAGE" != "null" and "$REPO_HOMEPAGE":
               data['url'] = "$REPO_HOMEPAGE"
-          if topics_str:
-              data['topics'] = topics_str
+          if "$REPO_TOPICS" != "null" and "$REPO_TOPICS":
+              data['topics'] = "$REPO_TOPICS"
           if "$REPO_LICENSE" != "null" and "$REPO_LICENSE":
               data['license'] = "$REPO_LICENSE"
 
