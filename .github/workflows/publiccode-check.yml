@@ -32,6 +32,8 @@ jobs:
 
       - name: Check and Update publiccode.yaml
         run: |
+          
+          GIT_DATA="${{ toJson(github) }}"
           REPO_NAME="${{ github.event.repository.name }}"
           REPO_DESC="${{ github.event.repository.description }}"
           REPO_URL="${{ github.event.repository.html_url }}"
@@ -43,6 +45,10 @@ jobs:
           ORGANISATION_AVATAR="${{ github.event.repository.owner.avatar_url }}"
           ORGANISATION_URL="${{ github.event.repository.owner.html_url }}"
           ORGANISATION_EMAIL="${{ github.event.repository.owner.email }}"
+          
+          
+          echo "Lets look at the info..."
+          echo "$GIT_DATA"
 
           echo "Installing PyYAML..."
           pip install PyYAML
