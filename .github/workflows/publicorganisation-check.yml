@@ -1,0 +1,54 @@
+name: PublicOrganisation Check and Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Organization Name
+        run: |
+          if [[ "${{ github.repository }}" != *".github"* ]]; then
+            echo "This workflow can only be run within .github organizations."
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch Organization Details
+        run: |
+          ORG_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/orgs/${{ github.repository_owner }})
+          echo "ORG_DETAILS=$ORG_DETAILS" >> $GITHUB_ENV
+
+      - name: Check and Update publicorganisation.yaml
+        run: |
+          ORG_NAME="${{ github.repository_owner }}"
+          ORG_DESC="${{ github.event.organization.description }}"
+          ORG_LOGO=$(echo $ORG_DETAILS | jq -r '.avatar_url')
+          ORG_URL=$(echo $ORG_DETAILS | jq -r '.html_url')
+          ORG_EMAIL=$(echo $ORG_DETAILS | jq -r '.email')
+          
+          if [ ! -f "publicorganisation.yaml" ]; then
+            echo "publicorganisation.yaml does not exist, creating one."
+            touch publicorganisation.yaml
+          fi
+          
+          echo "name: $ORG_NAME" > publicorganisation.yaml
+          echo "description: $ORG_DESC" >> publicorganisation.yaml
+          echo "logo: $ORG_LOGO" >> publicorganisation.yaml
+          echo "url: $ORG_URL" >> publicorganisation.yaml
+          echo "email: $ORG_EMAIL" >> publicorganisation.yaml
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add publicorganisation.yaml
+          git commit -m "Update publicorganisation.yaml with org details" || echo "No changes to commit"
+          git push
