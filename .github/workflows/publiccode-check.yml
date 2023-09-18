@@ -23,10 +23,10 @@ jobs:
       - name: Check and Update publiccode.yaml
         run: |
           REPO_NAME="${{ github.repository }}"
-          REPO_DESC="${{ github.event.repository }}"
+          REPO_DESC="${{ github.event.repository.description }}"
           
-          echo "${{ github.repository }}"
-          echo "${{ github.event.repository.description }}"
+          echo "${{ github }}"
+          echo "${{ github.event.repository }}"
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
