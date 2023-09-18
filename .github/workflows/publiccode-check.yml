@@ -25,8 +25,12 @@ jobs:
           REPO_NAME="${{ github.repository }}"
           REPO_DESC="${{ github.event.repository.description }}"
           
-          echo "${{ github }}" | jq
-          echo "${{ github.event.repository }}"| jq
+          echo "${{ github.event.repository.name  }}"
+          echo "${{ github.event.repository.description }}"
+          echo "${{ github.event.repository.html_url }}"
+          echo "${{ github.event.repository.homepage  }}"
+          echo "${{ github.event.repository.topics  }}"
+          echo "${{ github.event.repository.owner.login  }}"
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
