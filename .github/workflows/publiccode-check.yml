@@ -31,7 +31,7 @@ jobs:
           REPO_DESC="${{ github.event.repository.description }}"
           REPO_URL="${{ github.event.repository.html_url }}"
           REPO_HOMEPAGE="${{ github.event.repository.homepage }}"
-          REPO_TOPICS="${{ toJson(github.event.repository.topics) }}"
+          #REPO_TOPICS="${{ github.event.repository.topics }}"
           REPO_LICENSE="${{ github.event.repository.license.key }}"
           REPO_CREATED_AT="${{ github.event.repository.created_at }}"
 
