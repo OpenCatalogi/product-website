@@ -26,15 +26,14 @@ jobs:
           REPO_DESC="${{ github.event.repository.description }}"
           REPO_URL "${{ github.event.repository.html_url }}"
           REPO_HOMEPAGE "${{ github.event.repository.homepage  }}"
-          REPO_TOPIC "${{ github.event.repository.topics  }}"
+          REPO_TOPICS "${{ github.event.repository.topics  }}"
           
           ORGANISATION_NAME "${{ github.event.repository.owner.login }}"    
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
             touch publiccode.yaml
-          fi
-        
+          fi        
         
           if [ "$REPO_NAME" != "null" ]; then
             echo "name: $REPO_NAME" > publiccode.yaml
@@ -42,19 +41,18 @@ jobs:
   
           if [ "$REPO_DESC" != "null" ]; then
             echo "description: $REPO_DESC" >> publiccode.yaml
-          fi
+          fi          
           
-          
-          if [ "REPO_URL" != "null" ]; then
-            echo "url: REPO_URL" > publiccode.yaml
+          if [ "$REPO_URL" != "null" ]; then
+            echo "url: $REPO_URL" > publiccode.yaml
           fi
   
-          if [ "REPO_HOMEPAGE" != "null" ]; then
-            echo "url: REPO_HOMEPAGE" >> publiccode.yaml
+          if [ "$REPO_HOMEPAGE" != "null" ]; then
+            echo "url: $REPO_HOMEPAGE" >> publiccode.yaml
           fi
   
-          if [ "REPO_TOPIC" != "null" ]; then
-            echo "topics: REPO_TOPIC" >> publiccode.yaml
+          if [ "$REPO_TOPICS" != "null" ]; then
+            echo "topics: $REPO_TOPICS" >> publiccode.yaml
           fi
           
           if [ "$REPO_AVATAR" != "null" ]; then
