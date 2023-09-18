@@ -20,54 +20,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Fetch Repository Details
-        run: |
-          REPO_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }})
-          echo "REPO_DETAILS=$REPO_DETAILS" >> $GITHUB_ENV
-
       - name: Check and Update publiccode.yaml
         run: |
-          REPO_NAME=$(echo $REPO_DETAILS | jq -r '.name')
-          REPO_DESC=$(echo $REPO_DETAILS | jq -r '.description')
-          REPO_AVATAR=$(echo $REPO_DETAILS | jq -r '.owner.avatar_url')
-          REPO_URL=$(echo $REPO_DETAILS | jq -r '.html_url')
-          REPO_EMAIL=$(echo $REPO_DETAILS | jq -r '.owner.email')
-          REPO_LICENSE=$(echo $REPO_DETAILS | jq -r '.license.name')
+          REPO_NAME="${{ github.repository }}"
+          REPO_DESC="${{ github.event.repository.description }}"
           
           if [ ! -f "publiccode.yaml" ]; then
             echo "publiccode.yaml does not exist, creating one."
             touch publiccode.yaml
           fi
           
-          if [ "$REPO_NAME" != "null" ]; then
-            echo "name: $REPO_NAME" > publiccode.yaml
-          fi
-          
-          if [ "$REPO_DESC" != "null" ]; then
-            echo "description: $REPO_DESC" >> publiccode.yaml
-          fi
-          
-          if [ "$REPO_AVATAR" != "null" ]; then
-            echo "avatar: $REPO_AVATAR" >> publiccode.yaml
-          fi
-          
-          if [ "$REPO_URL" != "null" ]; then
-            echo "url: $REPO_URL" >> publiccode.yaml
-          fi
-          
-          if [ "$REPO_EMAIL" != "null" ]; then
-            echo "email: $REPO_EMAIL" >> publiccode.yaml
-          fi
-          
-          if [ "$REPO_LICENSE" != "null" ]; then
-            echo "license: $REPO_LICENSE" >> publiccode.yaml
-          fi
+          echo "name: $REPO_NAME" > publiccode.yaml
+          echo "description: $REPO_DESC" >> publiccode.yaml
 
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add publiccode.yaml
-          git commit -m "Update publiccode.yaml with repo details" || echo "No changes to commit"
+          git commit -m "Update publiccode.yaml with repo name and description" || echo "No changes to commit"
           git push
