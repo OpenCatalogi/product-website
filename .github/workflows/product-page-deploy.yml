@@ -24,9 +24,18 @@ env: # Change these to your preferences any image url can also be a base encoded
   FOOTER_LOGO_HREF: "https://rotterdam.nl/"
 
   # Jumbotron
-  JUMBOTRON_TITLE: "Open Catalogi"
-  JUMBOTRON_SUBTITLE: "Open Catalogi is een oplossing voor het gezamenlijk weergeven van meerdere bronnen in één uniform overzicht (catalogus)"
-  JUMBOTRON_DESCRIPTION: "Als federatieve oplossing biedt Open Catalogi een digitaal platform dat zich richt op de standaardisatie en digitalisering van overheidsdiensten. Het platform faciliteert een efficiëntere delen van informatie tussen overheidsorganisaties over hun software en processen, waardoor ze hun dienstverlening kunnen verbeteren en moderniseren. <br/><br/> Door het aanbieden van informatie uit meerdere bronnen en het bieden van gestandaardiseerde informatie, stelt Open Catalogi overheidsentiteiten in staat om sneller en effectiever te reageren op de behoeften van zichzelf en burgers."
+  JUMBOTRON_TITLE: "OpenCatalogi"
+  JUMBOTRON_SUBTITLE: "OpenCatalogi is een oplossing voor het gezamenlijk weergeven van meerdere bronnen in één uniform overzicht (catalogus)"
+  JUMBOTRON_DESCRIPTION: >
+    Als federatieve oplossing biedt OpenCatalogi een digitaal platform dat zich richt op 
+    de standaardisatie en digitalisering van overheidsdiensten. Het platform faciliteert 
+    een efficiëntere delen van informatie tussen overheidsorganisaties over hun software 
+    en processen, waardoor ze hun dienstverlening kunnen verbeteren en moderniseren. 
+  
+    Door het aanbieden van informatie uit meerdere bronnen en het bieden van gestandaardiseerde 
+    informatie, stelt OpenCatalogi overheidsentiteiten in staat om sneller en effectiever te 
+    reageren op de behoeften van zichzelf en burgers.
+
   JUMBOTRON_SVG: "https://backend-dvg.rotterdam.nl/sites/default/files/2022-12/22500-Arnoud-Verhey_0.jpg"
 
   # Other
